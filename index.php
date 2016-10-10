@@ -4,6 +4,25 @@
     //print_r($AU);
 
     //var CD = JSON.stringify(print_r($AU)); console.log(CD);
+
+    /*
+
+    $CCMDresultCC
+    $CCMDresultCM
+
+    $CAMDresultCC
+    $CAMDresultCM
+
+    $CCGPCMresultCC
+    $CCGPCMresultCM
+
+    $CCPUresultCC
+    $CCPUresultCM
+
+    $CAPUresultCC
+    $CAPUresultCM
+
+    */
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +70,6 @@
             title: {
                 text: null
             },
-            //maxPadding: 0.02,
             lineWidth: 1,
             tickWidth: 1,
             offset: 1
@@ -110,7 +128,7 @@
             text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
         },
         subtitle: {
-            text: ''
+            text: 'El Total de Accidentados en el Rango de fecha es de:'
         },
         xAxis: {
             categories: <?=($CCGPCMresultCM)?>,
@@ -180,6 +198,9 @@
         },
         title: {
             text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
+        },
+        subtitle:{
+            text: 'El Total de Casos en el Rango de fecha es de:'
         },
         xAxis: {
             categories: <?=($CCMDresultCM)?>
@@ -362,10 +383,10 @@ $(function () {
             }
         },
         title: {
-            text: ''
+            text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
         },
         subtitle: {
-            text: ''
+            text: 'El Total de Casos en el Rango de fecha es de:'
         },
         xAxis: {
             categories: <?=($CCPUresultCM)?>
@@ -403,7 +424,7 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: ''
+            text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
         },
         subtitle: {
             text: ''
@@ -522,6 +543,63 @@ $(function () {
 });1
     </script>
 
+
+    <script>
+        $(function () {
+    // Set up the chart
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'CAPU',
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                depth: 50,
+                viewDistance: 25
+            }
+        },
+        title: {
+            text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
+        },
+        subtitle: {
+            text: 'El Total de Accidentados en el Rango de fecha es de:'
+        },
+        xAxis: {
+            categories: <?=($CAPUresultCM)?>,
+        tickInterval: 1,
+            minorTickInterval: 1,
+        },
+        plotOptions: {
+            column: {
+                depth: 25
+            }
+        },
+        series: [{
+            data: <?=($CAPUresultCC)?>
+        }]
+    });
+
+    function showValues() {
+        $('#alpha-value').html(chart.options.chart.options3d.alpha);
+        $('#beta-value').html(chart.options.chart.options3d.beta);
+        $('#depth-value').html(chart.options.chart.options3d.depth);
+    }
+
+    // Activate the sliders
+    $('#sliders input').on('input change', function () {
+        chart.options.chart.options3d[this.id] = this.value;
+        showValues();
+        chart.redraw(false);
+    });
+
+    showValues();
+});
+
+
+    
+
+    </script>
 
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -909,11 +987,11 @@ $(function () {
                   <i class="fa fa-minus"></i></button>
               </div>
               <i class="fa fa-map-marker"></i>
-              <h3 class="box-title">CANTIDAD DE CASOS POR CENTRO MEDICO</h3>
+              <h3 class="box-title">CANTIDAD DE ACCIDENTADOS POR UBIGEO</h3>
             </div>
             <div class="box-body">
               <div id="" style="height: 100%; width: 100%;">
-                    <div id="CCPCM" class="divid2"></div>
+                    <div id="CAPU" class="divid2"></div>
               </div>
             </div>
           </div>

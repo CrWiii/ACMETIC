@@ -8,6 +8,11 @@
     $CCGPCM = "SELECT SUM(CONVERT(NUMERIC(18,2),TotalCartas)) as TC, Nom_CentroMedico FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico GROUP BY all Nom_CentroMedico";
     $CAPU = "SELECT COUNT(GRL_ENCARGONRO) AS CantidadCasos, DACCIDENTE_DISTRITO FROM AtencionMedica GROUP BY all DACCIDENTE_DISTRITO";
     $CCPU = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadCasos, DACCIDENTE_DISTRITO FROM AtencionMedica GROUP BY all DACCIDENTE_DISTRITO";
+
+
+    $CantidadTotalAccidentados = "SELECT COUNT(GRL_ENCARGONRO) AS FROM AtencionMedica";
+
+    $CantidadTotalCasos = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadTotalCasos FROM AtencionMedica";
    
 /*   
     $sql = "SELECT DACCIDENTE_DISTRITO,GRL_ENCARGONRO,GRL_SINIESTRO_OBS,GRL_TipPoliza,GRL_CERSOATNRO,DACCIDENTE_FECHA,GRL_CNIA,CabeceraReservaGtosMedUpDate,CabeceraReservaMuerte,CabeceraReservaSepelio,CabeceraReservaIncap,CabeceraReservaInval,TotalCartas,GRL_SINIESTRO_OBS,GRL_TipPoliza,GRL_CERSOATNRO,DACCIDENTE_FECHA,GRL_CNIA,CabeceraReservaGtosMedUpDate,CabeceraReservaMuerte,CabeceraReservaSepelio,CabeceraReservaIncap,CabeceraReservaInval,TotalCartas,CabeceraSumFactura,CabeceraSumReemb,CabeceraCostoSiniestro,CabeceraSumCobertura,DAccidentado_Edad,DAccidentado_Sexo,DDiagnostico_Tipo ,DAInicial_CentroMedico,fechahorallamada,ComentSinCarta,TotalCartasGPendientes,CabeceraSumFactura,CabeceraSumReemb,CabeceraCostoSiniestro,CabeceraSumCobertura,DAccidentado_Edad,DAccidentado_Sexo,DDiagnostico_Tipo,DAInicial_CentroMedico,fechahorallamada,ComentSinCarta,TotalCartasGPendientes,Nom_CentroMedico,vlugar  FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico";
@@ -120,10 +125,6 @@
             array_push($CAPUUbigeo, mb_convert_encoding($row['DACCIDENTE_DISTRITO'], "UTF-8", "iso-8859-1"));}
     $CAPUresultCC = json_encode($CAPUTotalAccidentados);
     $CAPUresultCM = json_encode($CAPUUbigeo);   
-    
-
-
-
 
     sqlsrv_free_stmt( $stmt);
     sqlsrv_close($conn);
