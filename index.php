@@ -1,12 +1,7 @@
 <?php 
     require 'DAO/Testing.php';
-    ///var_dump($AccidentesPorUbigeo);
-    //print_r($AU);
-
-    //var CD = JSON.stringify(print_r($AU)); console.log(CD);
-
     /*
-
+        
     $CCMDresultCC
     $CCMDresultCM
 
@@ -61,7 +56,7 @@
             text: 'RANGO DE FECHA: Desde:01/01/2016  Hasta:10/10/2016'
         },
         subtitle: {
-            text: ''
+            text: 'El Total de Accidentados en el Rango de fecha es de: <?=$CantidadTotalCasos?>'
         },
         xAxis: {
             categories: <?=($CCMDresultCM)?>,
@@ -1048,7 +1043,7 @@ $(function () {
                   <i class="fa fa-minus"></i></button>
               </div>
               <i class="fa fa-map-marker"></i>
-              <h3 class="box-title">IMPIRTES TOTALES CARTAS GARANTIA POR CENTRO MEDICO</h3>
+              <h3 class="box-title">IMPORTES TOTALES CARTAS GARANTIA POR CENTRO MEDICO</h3>
             </div>
             <div class="box-body">
               <div id="" style="height: 100%; width: 100%;">

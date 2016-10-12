@@ -2,18 +2,18 @@
     require 'Config/Database.php';
     //require 'Config/Database.php';
    //$COUNT = 1;
-    $AccidentesPorUbigeo = '';
     $CAMD = "SELECT COUNT(GRL_ENCARGONRO) AS CantidadCasos, Nom_CentroMedico FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico GROUP BY all Nom_CentroMedico ORDER BY CantidadCasos";
     $CCMD = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadCasos, Nom_CentroMedico FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico GROUP BY all Nom_CentroMedico ORDER BY CantidadCasos";
     $CCGPCM = "SELECT SUM(CONVERT(NUMERIC(18,2),TotalCartas)) as TC, Nom_CentroMedico FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico GROUP BY all Nom_CentroMedico";
     $CAPU = "SELECT COUNT(GRL_ENCARGONRO) AS CantidadCasos, DACCIDENTE_DISTRITO FROM AtencionMedica GROUP BY all DACCIDENTE_DISTRITO";
     $CCPU = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadCasos, DACCIDENTE_DISTRITO FROM AtencionMedica GROUP BY all DACCIDENTE_DISTRITO";
 
-
-    $CantidadTotalAccidentados = "SELECT COUNT(GRL_ENCARGONRO) AS FROM AtencionMedica";
-
-    $CantidadTotalCasos = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadTotalCasos FROM AtencionMedica";
-   
+    /*
+    $CantidadTotalAccidentadossql = "SELECT COUNT(GRL_ENCARGONRO) AS FROM AtencionMedica";
+    $CantidadTotalCasossql = "SELECT COUNT(DISTINCT GRL_ENCARGONRO) AS CantidadTotalCasos FROM AtencionMedica";
+    $CantidadTotalAccidentados = sqlsrv_query($conn, $CantidadTotalAccidentadossql);
+    $CantidadTotalCasos = sqlsrv_query($conn, $CantidadTotalCasossql);
+    */
 /*   
     $sql = "SELECT DACCIDENTE_DISTRITO,GRL_ENCARGONRO,GRL_SINIESTRO_OBS,GRL_TipPoliza,GRL_CERSOATNRO,DACCIDENTE_FECHA,GRL_CNIA,CabeceraReservaGtosMedUpDate,CabeceraReservaMuerte,CabeceraReservaSepelio,CabeceraReservaIncap,CabeceraReservaInval,TotalCartas,GRL_SINIESTRO_OBS,GRL_TipPoliza,GRL_CERSOATNRO,DACCIDENTE_FECHA,GRL_CNIA,CabeceraReservaGtosMedUpDate,CabeceraReservaMuerte,CabeceraReservaSepelio,CabeceraReservaIncap,CabeceraReservaInval,TotalCartas,CabeceraSumFactura,CabeceraSumReemb,CabeceraCostoSiniestro,CabeceraSumCobertura,DAccidentado_Edad,DAccidentado_Sexo,DDiagnostico_Tipo ,DAInicial_CentroMedico,fechahorallamada,ComentSinCarta,TotalCartasGPendientes,CabeceraSumFactura,CabeceraSumReemb,CabeceraCostoSiniestro,CabeceraSumCobertura,DAccidentado_Edad,DAccidentado_Sexo,DDiagnostico_Tipo,DAInicial_CentroMedico,fechahorallamada,ComentSinCarta,TotalCartasGPendientes,Nom_CentroMedico,vlugar  FROM AtencionMedica a LEFT JOIN BDProCentroMedico c ON a.DAInicial_CentroMedico=c.Cod_CentroMedico";
    
@@ -72,11 +72,14 @@
          die( print_r( sqlsrv_errors(), true));}
     $CCMDCantidadCasos = array();
     $CCMDCentrosMedicos = array();
+    $CantidadTotalCasos = 1;
         while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
             array_push($CCMDCantidadCasos, $row['CantidadCasos']);
-            array_push($CCMDCentrosMedicos, mb_convert_encoding($row['Nom_CentroMedico'], "UTF-8", "iso-8859-1"));}
+            array_push($CCMDCentrosMedicos, mb_convert_encoding($row['Nom_CentroMedico'], "UTF-8", "iso-8859-1"));
+            $CantidadTotalCasos++;}
     $CCMDresultCC = json_encode($CCMDCantidadCasos);
     $CCMDresultCM = json_encode($CCMDCentrosMedicos);
+
     
     $stmt = sqlsrv_query($conn, $CAMD);
     if($stmt === false){
@@ -84,9 +87,11 @@
          die(print_r(sqlsrv_errors(),true));}
     $CAMDCantidadAccidentados = array();
     $CAMDCentrosMedicos = array();
+    $CantidadTotalAccidentados = 1;
         while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
             array_push($CAMDCantidadAccidentados, $row['CantidadCasos']);
-            array_push($CAMDCentrosMedicos, mb_convert_encoding($row['Nom_CentroMedico'], "UTF-8", "iso-8859-1"));}
+            array_push($CAMDCentrosMedicos, mb_convert_encoding($row['Nom_CentroMedico'], "UTF-8", "iso-8859-1"));
+            $CantidadTotalAccidentados++;}
     $CAMDresultCC = json_encode($CAMDCantidadAccidentados);
     $CAMDresultCM = json_encode($CAMDCentrosMedicos);
 
